@@ -1,0 +1,159 @@
+import java.util.Scanner;
+
+public class Praktikumpertemuan4 {
+
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        int pilihan;
+
+        // ============================================================
+        //  DO-WHILE: Menu utama terus muncul sampai pilih keluar
+        // ============================================================
+        do {
+            System.out.println("SISTEM KASIR  INIMARET");
+            System.out.println("1. Entri Data Penjualan");
+            System.out.println("2. Print Struk");
+            System.out.println("3. Keluar");
+            System.out.print("  Pilih menu: ");
+            pilihan = bacaInt();
+
+            if (pilihan == 1) {
+                entriData();
+            } else if (pilihan == 2) {
+                printStruk();
+            } else if (pilihan == 3) {
+                System.out.println("\n  Terima kasih! Sampai jumpa.\n");
+            } else {
+                System.out.println("\n  [!] Pilihan tidak valid.\n");
+            }
+
+        } while (pilihan != 3);
+    }
+
+    // ============================================================
+    //  DATA TRANSAKSI (variabel global, BUKAN array)
+    // ============================================================
+    static int    jumlahBarang  = 0;
+    static String dataBarang    = "";   // semua baris barang sebagai String
+    static double grandTotal    = 0;
+
+    // ============================================================
+    //  FITUR 1 – ENTRI DATA PENJUALAN
+    // ============================================================
+    static void entriData() {
+        System.out.println("      ENTRI DATA PENJUALAN          ");
+
+        // Reset transaksi sebelumnya
+        dataBarang = "";
+        grandTotal = 0;
+        // DO-WHILE: validasi jumlah barang harus > 0 dan maksimal 5
+        do {
+            System.out.print("  Jumlah barang yang ingin diinput: ");
+            jumlahBarang = bacaInt();
+            if (jumlahBarang <= 0) {
+                System.out.println("  [!] Jumlah barang harus lebih dari 0!");
+            } else if (jumlahBarang > 5) {
+                System.out.println("  [!] Maksimal 5 barang! Mengatur ke 5.");
+                jumlahBarang = 5;
+            }
+        } while (jumlahBarang <= 0);
+
+        System.out.println();
+
+        // FOR: input data tiap barang sebanyak jumlahBarang
+        for (int i = 1; i <= jumlahBarang; i++) {
+
+            System.out.println("  ── Barang ke-" + i + " ──");
+
+            // Input nama barang
+            System.out.print("  Nama Barang  : ");
+            String nama = sc.nextLine().trim();
+            while (nama.isEmpty()) {
+                System.out.print("  [!] Nama tidak boleh kosong. Nama Barang: ");
+                nama = sc.nextLine().trim();
+            }
+
+            // DO-WHILE: validasi quantity
+            int qty;
+            do {
+                System.out.print("  Quantity     : ");
+                qty = bacaInt();
+                if (qty <= 0) System.out.println("  [!] Quantity harus lebih dari 0!");
+            } while (qty <= 0);
+
+            // DO-WHILE: validasi harga
+            double harga;
+            do {
+                System.out.print("  Harga Satuan : Rp ");
+                harga = bacaDouble();
+                if (harga <= 0) System.out.println("  [!] Harga harus lebih dari 0!");
+            } while (harga <= 0);
+
+            double subtotal = qty * harga;
+            grandTotal += subtotal;
+
+            // Simpan baris ke String (tanpa array)
+            dataBarang += nama + " " + qty + " " + formatRp(harga) + " " + formatRp(subtotal) + "\n";
+
+            System.out.println("✓ Subtotal " + formatRp(subtotal));
+        }
+
+        System.out.println("  ✓ Semua data berhasil disimpan!");
+        System.out.println("Grand Total " + formatRp(grandTotal));
+    }
+
+    // ============================================================
+    //  FITUR 2 – PRINT STRUK
+    // ============================================================
+    static void printStruk() {
+
+        if (jumlahBarang == 0 || dataBarang.isEmpty()) {
+            System.out.println("\n  [!] Belum ada data. Silakan entri data terlebih dahulu.\n");
+            return;
+        }
+
+        System.out.println("\n");
+        System.out.println("             STRUK BELANJA INIMARET        ");
+        System.out.println("Detail Barang:");
+        System.out.print(dataBarang);
+        System.out.println("TOTAL BELANJA " + formatRp(grandTotal));
+    }
+
+    // ============================================================
+    //  HELPER METHODS
+    // ============================================================
+    static String formatRp(double nominal) {
+        long bulat = (long) nominal;
+        String angka = Long.toString(bulat);
+        StringBuilder sb = new StringBuilder();
+        int sisa = angka.length() % 3;
+        if (sisa > 0) sb.append(angka, 0, sisa);
+        for (int i = sisa; i < angka.length(); i += 3) {
+            if (sb.length() > 0) sb.append('.');
+            sb.append(angka, i, i + 3);
+        }
+        return "Rp " + sb;
+    }
+
+    static int bacaInt() {
+        while (true) {
+            try {
+                return Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.print("  [!] Masukkan angka bulat yang valid: ");
+            }
+        }
+    }
+
+    static double bacaDouble() {
+        while (true) {
+            try {
+                return Double.parseDouble(sc.nextLine().trim().replace(",", "."));
+            } catch (NumberFormatException e) {
+                System.out.print("  [!] Masukkan angka yang valid: ");
+            }
+        }
+    }
+}
