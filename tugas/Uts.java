@@ -14,7 +14,6 @@ public class Uts {
         int pilihan;
         
         do {
-            // Tampilkan menu
             System.out.println("\n Pencatatan Penggunaan Internet Harian ");
             System.out.println("1. Input Data Penggunaan Kuota");
             System.out.println("2. Tampilkan Kategori Pemakaian");
@@ -25,7 +24,6 @@ public class Uts {
             
             switch (pilihan) {
                 case 1:
-                    // Input data pemakaian
                     System.out.println("\n--- Input Data Penggunaan Kuota ---");
                     for (int i = 0; i < hari.length; i++) {
                         System.out.print("Masukkan pemakaian untuk " + hari[i] + " (GB): ");
@@ -35,7 +33,6 @@ public class Uts {
                     break;
                     
                 case 2:
-                    // Tampilkan kategori pemakaian
                     System.out.println("\n--- Kategori Pemakaian Per Hari ---");
                     for (int i = 0; i < hari.length; i++) {
                         String kategori;
@@ -51,17 +48,14 @@ public class Uts {
                     break;
                     
                 case 3:
-                    // Print out hasil: total kuota dan hari terbesar
                     System.out.println("\n--- Print Out Hasil ---");
                     
-                    // Hitung total kuota
                     double total = 0;
                     for (double p : pemakaian) {
                         total += p;
                     }
                     System.out.println("Total Penggunaan Kuota: " + total + " GB");
                     
-                    // Cari pemakaian terbesar dan hari-harinya
                     double maxPemakaian = pemakaian[0];
                     for (int i = 1; i < pemakaian.length; i++) {
                         if (pemakaian[i] > maxPemakaian) {
@@ -69,7 +63,6 @@ public class Uts {
                         }
                     }
                     
-                    // Kumpulkan hari dengan pemakaian terbesar
                     StringBuilder hariTerbesar = new StringBuilder();
                     for (int i = 0; i < hari.length; i++) {
                         if (pemakaian[i] == maxPemakaian) {
