@@ -4,13 +4,13 @@ public class Uts {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
-        // Array untuk nama hari (7 hari)
+        
         String[] hari = {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
         
-        // Array untuk pemakaian kuota (7 hari)
+        
         double[] pemakaian = new double[7];
         
-        // Variabel untuk menu
+      
         int pilihan;
         
         do {
