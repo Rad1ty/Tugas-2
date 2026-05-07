@@ -47,7 +47,7 @@ public class latihanarray7 {
                         break;
                     }
                     
-                    System.out.println("\n=== Pilihan Kategori ===");
+                    System.out.println("\n- Pilihan Kategori -");
                     for (int i = 0; i < kategori.length; i++) {
                         System.out.println((i+1) + ". " + kategori[i] + " - Rp " + harga[i]);
                     }
